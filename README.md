@@ -106,7 +106,7 @@ This will run all the unit tests and provide feedback on the correctness of the 
 
 ## Contributing
 
-If you’d like to contribute to the development of `tidbits`, please fork the repository and create a pull request. I welcome contributions that improve existing features, fix bugs, or add new functionality.
+If you’d like to contribute to the development of `DataSciFuncs`, please fork the repository and create a pull request. I welcome contributions that improve existing features, fix bugs, or add new functionality.
 
 ### Guidelines:
 - Write clear, concise code and include comments where necessary.
@@ -115,11 +115,11 @@ If you’d like to contribute to the development of `tidbits`, please fork the r
 
 ## Documentation
 
-This README serves as the primary documentation for `tidbits`, providing an overview of the package, installation instructions, and usage examples. For any additional details or updates, refer to this document.
+This README serves as the primary documentation for `DataSciFuncs`, providing an overview of the package, installation instructions, and usage examples. For any additional details or updates, refer to this document.
 
 ## License
 
-`tidbits` is licensed under the MIT License. See the [LICENSE](https://github.com/yourusername/tidbits/blob/main/LICENSE) file for more details.
+`DataSciFuncs` is licensed under the MIT License. See the [LICENSE](https://github.com/dlumian/DataSciFuncs/blob/main/LICENSE) file for more details.
 
 ## Roadmap
 
