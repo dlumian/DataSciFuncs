@@ -1,4 +1,4 @@
-# Data Science Functions ()
+# Data Science Functions
 
  **DataSciFuncs** is a Python package providing a collection of utility functions and tools for common import, input, and output operations used by data scientists and developers.
 
@@ -11,14 +11,14 @@ Current features are grouped into:
 
 ## Installation
 
-You can install the `tidbits` package via PyPI or directly from GitHub.
+You can install the `DataSciFuncs` package via PyPI or directly from GitHub.
 
 ### Installing from PyPI
 
 To install the latest stable release from PyPI, run:
 
 ```bash
-pip install tidbits
+pip install datascifuncs
 ```
 
 ### Installing from GitHub
@@ -26,7 +26,7 @@ pip install tidbits
 To install the latest development version directly from GitHub, run:
 
 ```bash
-pip install git+https://github.com/dlumian/tidbits.git
+pip install git+https://github.com/dlumian/DataSciFuncs.git
 ```
 
 ## Submodules
