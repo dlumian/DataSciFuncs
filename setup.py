@@ -16,7 +16,7 @@ setup(
         'matplotlib',
         'scikit-learn',
         'nbconvert',
-        'npformat'
+        'nbformat'
     ],
     classifiers=[
         'Programming Language :: Python :: 3',
