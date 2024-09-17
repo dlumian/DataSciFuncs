@@ -4,7 +4,7 @@ import unittest
 import os
 from tidbits.tidbit_tools import load_json, write_json
 
-class TestIOUtils(unittest.TestCase):
+class TestTidbitTools(unittest.TestCase):
 
     def setUp(self):
         # Set up a sample dictionary to be saved as JSON
