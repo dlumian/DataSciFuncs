@@ -8,7 +8,7 @@ setup(
     description='A package for loading/saving data and verifying paths.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/dlumian/tidbits',
+    url='https://github.com/dlumian/DataSciFuncs',
     packages=find_packages(),
     install_requires=[
         'pandas',
