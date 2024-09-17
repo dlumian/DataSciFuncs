@@ -14,7 +14,7 @@ setup(
         'pandas',
         'seaborn',
         'matplotlib',
-        'sklearn',
+        'scikit-learn',
         'nbconvert',
         'npformat'
     ],
