@@ -1,6 +1,6 @@
-# Tidbits
+# Data Science Functions ()
 
- **Tidbits** is a Python package providing a collection of utility functions and tools for common import, input, and output operations used by data scientists and developers.
+ **DataSciFuncs** is a Python package providing a collection of utility functions and tools for common import, input, and output operations used by data scientists and developers.
 
 Current features are grouped into: 
 
@@ -120,7 +120,6 @@ This README serves as the primary documentation for `tidbits`, providing an over
 ## License
 
 `tidbits` is licensed under the MIT License. See the [LICENSE](https://github.com/yourusername/tidbits/blob/main/LICENSE) file for more details.
-
 
 ## Roadmap
 

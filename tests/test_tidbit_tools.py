@@ -1,5 +1,3 @@
-# tests/test_tidbit_tools.py
-
 import unittest
 import os
 from tidbits.tidbit_tools import load_json, write_json

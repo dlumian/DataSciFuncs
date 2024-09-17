@@ -2,7 +2,7 @@ import os
 import glob
 import shutil
 import nbformat
-from nbconvert.preprocessors import ClearOutputPreprocessor, ExecutePreprocessor
+from nbconvert.preprocessors import ClearOutputPreprocessor
 
 def remove_files(file_patterns):
     for pattern in file_patterns:
