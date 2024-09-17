@@ -1,3 +1,34 @@
+
+def apply_default_matplotlib_styling(fig, axs, title, xaxis_title=None, 
+                          yaxis_title=None, legend_title=None):
+    # Set the figure title
+    fig.suptitle(title, fontsize=24, fontname="Arial", color="black", 
+                 y=0.95, x=0.5, ha='center', va='top')
+    
+    # Check if axs is a single Axes object or an array of Axes
+    if not isinstance(axs, np.ndarray):
+        axs = [axs]
+
+    # Flatten the array if it is multi-dimensional
+    axs = np.ravel(axs)
+
+    # Set axis labels and customize tick labels for each subplot
+    for ax in axs:
+        if xaxis_title:
+            ax.set_xlabel(xaxis_title, fontsize=14, 
+                          fontname="Arial", color="black")
+        if yaxis_title:
+            ax.set_ylabel(yaxis_title, fontsize=14, 
+                          fontname="Arial", color="black")
+        
+        for label in (ax.get_xticklabels() + ax.get_yticklabels()):
+            label.set_fontname("Arial")
+            label.set_fontsize(14)
+            label.set_color("black")
+    
+    return fig, axs
+
+
 def apply_default_plotly_styling(fig, title, xaxis_title=None, 
                           yaxis_title=None, legend_title=None):
     """ Function to update layout with consistent styling and flexible parameters
