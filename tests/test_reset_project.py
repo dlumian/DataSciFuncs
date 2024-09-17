@@ -1,55 +1,68 @@
-# tests/test_reset_project.py
-
 import unittest
 import os
-import shutil
+import glob
+import nbformat
 from tidbits.reset_project import remove_files, remove_directories, reset_notebooks
 
 class TestResetProject(unittest.TestCase):
 
     def setUp(self):
-        # Set up files and directories for testing
-        self.test_dir = "test_dir"
-        self.test_file_1 = os.path.join(self.test_dir, "file1.txt")
-        self.test_file_2 = os.path.join(self.test_dir, "file2.txt")
-        self.test_subdir = os.path.join(self.test_dir, "subdir")
-
+        self.test_dir = 'test_dir'
+        self.test_files = ['file1.csv', 'file2.json', 'file3.txt', 'notebook1.ipynb', 'notebook2.ipynb']
         os.makedirs(self.test_dir, exist_ok=True)
-        os.makedirs(self.test_subdir, exist_ok=True)
-
-        with open(self.test_file_1, 'w') as f:
-            f.write("Sample content")
-        with open(self.test_file_2, 'w') as f:
-            f.write("Sample content")
-
-        # Set up a simple notebook file for reset_notebooks
-        self.test_notebook = os.path.join(self.test_dir, "test_notebook.ipynb")
-        notebook_content = '{"cells": [{"cell_type": "code", "outputs": ["output1", "output2"]}], "metadata": {}}'
-        with open(self.test_notebook, 'w') as f:
-            f.write(notebook_content)
+        
+        for file_name in self.test_files:
+            file_path = os.path.join(self.test_dir, file_name)
+            if file_name.endswith('.ipynb'):
+                # Create a sample notebook with outputs
+                nb = nbformat.v4.new_notebook()
+                nb.cells.append(nbformat.v4.new_code_cell("print('Hello, world!')", outputs=["output1"]))
+                with open(file_path, 'w') as f:
+                    nbformat.write(nb, f)
+            else:
+                with open(file_path, 'w') as f:
+                    f.write("Sample content")
 
     def tearDown(self):
-        # Clean up after tests
+        # Clean up: Remove the test directory after tests
         if os.path.exists(self.test_dir):
-            shutil.rmtree(self.test_dir)
+            for file_name in glob.glob(os.path.join(self.test_dir, '*')):
+                os.remove(file_name)
+            os.rmdir(self.test_dir)
 
     def test_remove_files(self):
-        remove_files([self.test_file_1, self.test_file_2])
-        self.assertFalse(os.path.exists(self.test_file_1))
-        self.assertFalse(os.path.exists(self.test_file_2))
+        # Remove CSV and JSON files
+        remove_files([os.path.join(self.test_dir, '*.csv'), os.path.join(self.test_dir, '*.json')])
+
+        # Check that the CSV and JSON files are removed
+        remaining_files = os.listdir(self.test_dir)
+        self.assertNotIn('file1.csv', remaining_files)
+        self.assertNotIn('file2.json', remaining_files)
+
+        # Check that the TXT and IPYNB files are not removed
+        self.assertIn('file3.txt', remaining_files)
+        self.assertIn('notebook1.ipynb', remaining_files)
+        self.assertIn('notebook2.ipynb', remaining_files)
 
     def test_remove_directories(self):
-        remove_directories([self.test_subdir])
-        self.assertFalse(os.path.exists(self.test_subdir))
+        # Remove the test directory
+        remove_directories([self.test_dir])
+
+        # Check that the directory is removed
+        self.assertFalse(os.path.exists(self.test_dir))
 
     def test_reset_notebooks(self):
+        # Apply reset to all notebooks in the test directory
         reset_notebooks(self.test_dir)
 
-        # Check that the notebook's outputs have been reset
-        with open(self.test_notebook, 'r') as f:
-            content = f.read()
-        self.assertIn('"outputs": []', content)
-        self.assertNotIn('"outputs": ["output1", "output2"]', content)
+        # Verify that the outputs in the notebooks have been cleared
+        for notebook_file in ['notebook1.ipynb', 'notebook2.ipynb']:
+            notebook_path = os.path.join(self.test_dir, notebook_file)
+            with open(notebook_path, 'r') as f:
+                nb = nbformat.read(f, as_version=4)
+                for cell in nb.cells:
+                    if cell.cell_type == 'code':
+                        self.assertEqual(cell.outputs, [])
 
 if __name__ == "__main__":
     unittest.main()

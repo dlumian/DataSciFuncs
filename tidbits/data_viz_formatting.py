@@ -1,6 +1,9 @@
+import numpy as np
+import pandas as pd
 
-def apply_default_matplotlib_styling(fig, axs, title, xaxis_title=None, 
-                          yaxis_title=None, legend_title=None):
+
+def apply_default_matplotlib_styling(fig, axs, title, 
+                xaxis_title=None, yaxis_title=None):
     # Set the figure title
     fig.suptitle(title, fontsize=24, fontname="Arial", color="black", 
                  y=0.95, x=0.5, ha='center', va='top')
