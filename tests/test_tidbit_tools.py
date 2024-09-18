@@ -1,6 +1,6 @@
 import unittest
 import os
-from tidbits.tidbit_tools import load_json, write_json
+from datascifuncs.tidbit_tools import load_json, write_json
 
 class TestTidbitTools(unittest.TestCase):
 

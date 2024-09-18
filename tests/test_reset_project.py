@@ -2,7 +2,7 @@ import unittest
 import os
 import glob
 import nbformat
-from tidbits.reset_project import remove_files, remove_directories, reset_notebooks
+from datascifuncs.reset_project import remove_files, remove_directories, reset_notebooks
 
 class TestResetProject(unittest.TestCase):
 

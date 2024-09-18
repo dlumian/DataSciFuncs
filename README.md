@@ -38,7 +38,7 @@ This submodule includes a variety of utility functions that support common data 
 
 #### Example Usage:
 ```python
-from tidbits.tidbit_tools import load_json, write_json, check_directory_name
+from datascifuncs.tidbit_tools import load_json, write_json, check_directory_name
 
 target_dir_name = 'main_repo_dir'
 check_directory_name(target_dir_name)
@@ -52,7 +52,7 @@ The `metrics` submodule provides functions to generate and save classification m
 
 #### Example Usage:
 ```python
-from tidbits.metrics import generate_classification_metrics
+from datascifuncs.metrics import generate_classification_metrics
 
 generate_classification_metrics(
     output_dir='metrics_output',
@@ -68,7 +68,7 @@ The `reset_project` submodule includes functions designed to help reset your pro
 
 #### Example Usage:
 ```python
-from tidbits.reset_project import remove_files, remove_directories, reset_notebooks
+from datascifuncs.reset_project import remove_files, remove_directories, reset_notebooks
 
 # Remove all CSV files and any JSON files in the current directory
 remove_files(['intermediate_data/*.csv', 'imgs/*.png'])
@@ -85,8 +85,8 @@ This submodule provides standardized formatting functions for visualizations cre
 
 #### Example Usage:
 ```python
-from tidbits.data_viz_formatting import apply_default_matplotlib_styling
-from tidbits.data_viz_formatting import apply_default_plotly_styling
+from datascifuncs.data_viz_formatting import apply_default_matplotlib_styling
+from datascifuncs.data_viz_formatting import apply_default_plotly_styling
 
 fig, axs = apply_default_matplotlib_styling(fig, axs, title='Main Title', xaxis_title='X-axis', yaxis_title='Y-axis')
 plotly_fit = apply_default_plotly_styling(fig, title='Main Title', xaxis_title='X-axis', yaxis_title='Y-axis', legend_title=None)

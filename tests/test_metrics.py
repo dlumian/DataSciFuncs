@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 import shutil
 import os
-from tidbits.metrics import (
+from datascifuncs.metrics import (
     generate_classification_metrics, 
     generate_metrics, 
     compare_confusion_matrices

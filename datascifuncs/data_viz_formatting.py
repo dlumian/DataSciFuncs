@@ -1,6 +1,4 @@
 import numpy as np
-import pandas as pd
-
 
 def apply_default_matplotlib_styling(fig, axs, title, 
                 xaxis_title=None, yaxis_title=None):
