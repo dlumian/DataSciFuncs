@@ -8,6 +8,7 @@ Current features are grouped into:
 1. Metrics generation: evaluation and visuals for classification models
 1. Project resetting: remove options for files and dirs, reset operations on notebooks
 1. Data visualization formatting: standardized formatting for matplotlib and plotly visuals
+1. Build pipeline: help for uploading packages to Test PyPi and Pypi with clean test environments
 
 ## Installation
 
@@ -92,9 +93,32 @@ fig, axs = apply_default_matplotlib_styling(fig, axs, title='Main Title', xaxis_
 plotly_fit = apply_default_plotly_styling(fig, title='Main Title', xaxis_title='X-axis', yaxis_title='Y-axis', legend_title=None)
 ```
 
-## Running Tests
+### 5. `build_pipeline`
+Submodule for uploading packages to `Test PyPi` and `Pypi`. Full pipeline includes removing old build files and conda environment, using `twine` and `setup.py` files to upload package, and `anaconda` environment creation to test download. Main pipeline function can be called via command line. Arguments used are:
+- path: path to directory with setup.py
+- env-name: name for anaconda environment-NOTE: If env exists, it will be removed before new run is tested
+- package-name: name for package as it appears in PyPi and Test PyPi
+- repository: options are `testpypi` or `pypi`
 
-Unit tests exist for all submodules except `data_viz_formatting`. 
+***Process Steps:***
+- Checks if version exists in given repository, exits and returns existing version numbers if so.
+- Removes old build files
+- Rebuilds package
+- Uploads package to selected repository
+- Removes conda env if it exists to ensure clean and complete install
+- Creates new conda environment
+- Installs package from repository
+
+Additional testing of package once installed may be warranted.
+
+
+```bash
+build-pipeline --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name test_env --package-name datascifuncs --repository testpypi
+
+build-pipeline --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name prod_env --package-name datascifuncs --repository pypi
+```
+
+## Running Tests
 
 To run the tests, navigate to the root directory of the package and execute:
 
@@ -103,6 +127,9 @@ python -m unittest discover
 ```
 
 This will run all the unit tests and provide feedback on the correctness of the various functions within the package.
+
+NOTE: Unit tests not currently implemented for `data_viz_formatting` and `build_pipeline`. 
+
 
 ## Contributing
 
@@ -123,6 +150,6 @@ This README serves as the primary documentation for `DataSciFuncs`, providing an
 
 ## Roadmap
 
-- Data visualization tests
+- Additional unit tests for submodules
 - Link to example usage in a data science project
 - More robust documentation

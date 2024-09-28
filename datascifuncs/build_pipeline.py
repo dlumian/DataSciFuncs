@@ -70,10 +70,18 @@ def upload_package(repo_path, repository):
     else:
         run_command(f"twine upload --repository testpypi {os.path.join(repo_path, 'dist/*')}")
 
+def conda_env_exists(env_name):
+    result = subprocess.run(['conda', 'env', 'list'], capture_output=True, text=True)
+    return env_name in result.stdout
+
 def remove_conda_env(env_name):
-    """Remove existing conda environment."""
-    print(f"Removing existing conda environment: {env_name}")
-    run_command(f"conda env remove -name {env_name} -y")
+    """Check if env exists and remove if environment found."""
+    if conda_env_exists(env_name):
+        print(f"Environment '{env_name}' exists. Removing it now.")
+        subprocess.run(['conda', 'remove', '--name', env_name, '--all', '-y'])
+        print(f"Environment '{env_name}' has been removed.")
+    else:
+        print(f"Environment '{env_name}' does not exist. Nothing to remove.")
 
 def create_conda_env(env_name):
     """Create a clean conda environment."""
@@ -83,11 +91,10 @@ def create_conda_env(env_name):
 def install_package(env_name, package_name, repository):
     """Install the package from the specified repository (Test PyPI or PyPI)."""
     print(f"Installing the package '{package_name}' from {repository} in environment '{env_name}'...")
-    run_command(f"conda init")
     if repository == "pypi":
-        run_command(f"conda activate {env_name} && pip install {package_name}")
+        run_command(f"conda run --name {env_name} pip install {package_name}")
     else:
-        run_command(f"conda activate {env_name} && pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple {package_name}")
+        run_command(f"conda run --name {env_name} pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple {package_name}")
 
 def full_pipeline(repo_path, env_name="testenv", package_name="datascifuncs", repository="testpypi"):
     """Run the full pipeline: clean, build, upload, create env, install."""

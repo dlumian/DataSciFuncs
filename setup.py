@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='datascifuncs',
-    version='0.4.3',
+    version='0.4.7',
     author='Danny Lumian',
     author_email='dlumian@gmail.com',
     description='A package for loading/saving data and verifying paths.',
@@ -20,7 +20,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'build-pipeline=your_package_name.build_pipeline:main',
+            'build-pipeline=datascifuncs.build_pipeline:main',
         ],
     },
     classifiers=[
