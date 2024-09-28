@@ -1,7 +1,47 @@
 import os
-import subprocess
+import re
 import sys
+import requests
 import argparse
+import subprocess
+from pathlib import Path
+
+
+def get_version_from_setup():
+    setup_path = Path("setup.py")
+    with setup_path.open() as f:
+        content = f.read()
+
+    version_match = re.search(r"version=['\"]([^'\"]+)['\"]", content)
+    if version_match:
+        return version_match.group(1)
+    else:
+        raise ValueError("Version not found in setup.py")
+
+def get_versions(package_name, repository="testpypi"):
+    if repository == "testpypi":
+        url = f"https://test.pypi.org/pypi/{package_name}/json"
+    else:
+        url = f"https://pypi.org/pypi/{package_name}/json"
+    
+    response = requests.get(url)
+    if response.status_code == 200:
+        data = response.json()
+        return data.get("releases", {}).keys()
+    else:
+        return []
+
+def check_version_and_prompt(package_name, repository="testpypi"):
+    current_version = get_version_from_setup()
+    url_versions = get_versions(package_name, repository=repository)
+    if not current_version in url_versions:
+        print(f"Version {current_version} is available for release.")
+        print(f"Proceeding with upload...")
+    else:
+        print(f"Version {current_version} already exists.")
+        print(f"Existing versions found are: {', '.join(url_versions)}.")
+        print(f'Exiting this run. Please update version and try again.')
+        sys.exit(1)
 
 def run_command(command, cwd=None):
     """Helper function to run a shell command and handle errors."""
@@ -46,6 +86,7 @@ def full_pipeline(repo_path, env_name="testenv", package_name="datascifuncs", re
     """Run the full pipeline: clean, build, upload, create env, install."""
     clean_build(repo_path)
     build_package(repo_path)
+    check_version_and_prompt('package_name', repository=repository)
     upload_package(repo_path, repository)
     create_conda_env(env_name)
     install_package(env_name, package_name, repository)
