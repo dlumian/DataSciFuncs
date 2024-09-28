@@ -1,3 +1,9 @@
+from .build_pipeline import (
+    full_pipeline
+)
+
+from .build_pipeline import main as build_pipeline_main
+
 from .data_viz_formatting import (
     apply_default_matplotlib_styling,
     apply_default_plotly_styling,

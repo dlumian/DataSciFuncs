@@ -91,7 +91,19 @@ def full_pipeline(repo_path, env_name="testenv", package_name="datascifuncs", re
     create_conda_env(env_name)
     install_package(env_name, package_name, repository)
 
-if __name__ == "__main__":
+def main():
+    """Runs a package build based on passed arguments and a setup.py file.
+    path: string of path to repository directory containing setup.py file
+    env-name: name of conda envrionment created and used for testing
+    package-name: string to use for name of package
+    repository: string of either testpypi or pypi defining where to load package to
+
+    Examples of shell usage after package install:
+
+    build-pipeline --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name test_env --package-name datascifuncs --repository testpypi
+
+    build-pipeline --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name prod_env --package-name datascifuncs --repository pypi
+    """
     # Set up argument parsing
     parser = argparse.ArgumentParser(description="Run the build and upload pipeline for a Python package.")
     parser.add_argument(
@@ -121,13 +133,6 @@ if __name__ == "__main__":
     # Run the full pipeline with the provided arguments
     full_pipeline(args.path, env_name=args.env_name, package_name=args.package_name, repository=args.repository)
 
-# ### Example:
-# - To run the pipeline and upload to **Test PyPI**:
-#    ```bash
-#    python BuildPipeline.py --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name test_env --package-name datascifuncs --repository testpypi
-#    ```
-  
-# - To run the pipeline and upload to **PyPI**:
-#    ```bash
-#    python BuildPipeline.py --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name prod_env --package-name datascifuncs --repository pypi
-#    ```
+
+if __name__ == "__main__":
+    main()

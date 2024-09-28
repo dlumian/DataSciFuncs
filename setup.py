@@ -18,6 +18,11 @@ setup(
         'nbconvert',
         'nbformat',
     ],
+    entry_points={
+        'console_scripts': [
+            'build-pipeline=your_package_name.build_pipeline:main',
+        ],
+    },
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
