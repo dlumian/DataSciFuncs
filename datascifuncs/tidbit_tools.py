@@ -18,7 +18,7 @@ def check_directory_name(target_name) -> bool:
     current_dir_name = os.path.basename(current_dir)    
     # Check if the current directory name matches the target_name
     if current_dir_name == target_name:
-        print(f'Directory set to {current_dir}, matches target dir sting {target_name}.')
+        print(f'Directory set to {current_dir}, matches target dir string {target_name}.')
         return True
     else:
         # Move up a directory
