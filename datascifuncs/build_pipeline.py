@@ -1,14 +1,16 @@
 import os
 import re
 import sys
+import pprint
 import requests
 import argparse
 import subprocess
 from pathlib import Path
 
 
-def get_version_from_setup():
-    setup_path = Path("setup.py")
+def get_version_from_setup(path):
+    setup_file_path = os.path.join(path, 'setup.py')
+    setup_path = Path(setup_file_path)
     with setup_path.open() as f:
         content = f.read()
 
@@ -31,8 +33,8 @@ def get_versions(package_name, repository="testpypi"):
     else:
         return []
 
-def check_version_and_prompt(package_name, repository="testpypi"):
-    current_version = get_version_from_setup()
+def check_version_and_prompt(path, package_name, repository="testpypi"):
+    current_version = get_version_from_setup(path=path)
     url_versions = get_versions(package_name, repository=repository)
     if not current_version in url_versions:
         print(f"Version {current_version} is available for release.")
@@ -68,6 +70,11 @@ def upload_package(repo_path, repository):
     else:
         run_command(f"twine upload --repository testpypi {os.path.join(repo_path, 'dist/*')}")
 
+def remove_conda_env(env_name):
+    """Remove existing conda environment."""
+    print(f"Removing existing conda environment: {env_name}")
+    run_command(f"conda env remove -name {env_name} -y")
+
 def create_conda_env(env_name):
     """Create a clean conda environment."""
     print(f"Creating a clean conda environment: {env_name}")
@@ -84,10 +91,11 @@ def install_package(env_name, package_name, repository):
 
 def full_pipeline(repo_path, env_name="testenv", package_name="datascifuncs", repository="testpypi"):
     """Run the full pipeline: clean, build, upload, create env, install."""
+    check_version_and_prompt(path=repo_path,package_name=package_name, repository=repository)
     clean_build(repo_path)
     build_package(repo_path)
-    check_version_and_prompt('package_name', repository=repository)
     upload_package(repo_path, repository)
+    remove_conda_env(env_name)
     create_conda_env(env_name)
     install_package(env_name, package_name, repository)
 
@@ -129,6 +137,15 @@ def main():
     )
 
     args = parser.parse_args()
+    # Print all settings before beginning the run
+    # Convert arguments to a dictionary
+    args_dict = vars(args)
+
+    print("Arguments received:")
+    print("\n")
+    pprint.pprint(args_dict, indent=4)
+    print("\n\n")
+    print("Proceeding with the script...")
 
     # Run the full pipeline with the provided arguments
     full_pipeline(args.path, env_name=args.env_name, package_name=args.package_name, repository=args.repository)
