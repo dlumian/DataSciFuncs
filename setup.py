@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='datascifuncs',
-    version='0.4.7',
+    version='0.1.0',
     author='Danny Lumian',
     author_email='dlumian@gmail.com',
     description='A package for loading/saving data and verifying paths.',
@@ -11,6 +11,7 @@ setup(
     url='https://github.com/dlumian/DataSciFuncs',
     packages=find_packages(),
     install_requires=[
+        'requests',
         'pandas',
         'seaborn',
         'matplotlib',

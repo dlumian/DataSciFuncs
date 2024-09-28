@@ -130,7 +130,6 @@ This will run all the unit tests and provide feedback on the correctness of the 
 
 NOTE: Unit tests not currently implemented for `data_viz_formatting` and `build_pipeline`. 
 
-
 ## Contributing
 
 If you’d like to contribute to the development of `DataSciFuncs`, please fork the repository and create a pull request. I welcome contributions that improve existing features, fix bugs, or add new functionality.
