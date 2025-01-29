@@ -68,20 +68,17 @@ generate_classification_metrics(
 ```
 
 ### 3. `reset_project`
-Functions to reset a project to its original state, allowing for faster iteration, editing, and testing. Include removing temporary/intermediate files and directories and resetting notebooks.
+Functions to remove directories and files, allowing for faster iteration, editing, and testing.
 
 #### Example Usage:
 ```python
-from datascifuncs.reset_project import remove_files, remove_directories, reset_notebooks
+from datascifuncs.reset_project import remove_files, remove_directories
 
 # Remove all CSV files and any JSON files in the current directory
 remove_files(['intermediate_data/*.csv', 'imgs/*.png'])
 
 # Remove a specific directory
 remove_directories(['temp_dir'])
-
-# Reset all notebooks in the specified directory
-reset_notebooks('notebooks')
 ```
 
 ### 4. `data_viz_formatting`
@@ -120,6 +117,22 @@ Additional testing of package once installed may be warranted.
 build-pipeline --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name test_env --package-name datascifuncs --repository testpypi
 
 build-pipeline --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name prod_env --package-name datascifuncs --repository pypi
+```
+
+## CLI Steps
+CLI steps for package build steps for clarity and debugging. Example steps direct to main PyPi, must edit for TestPypi.
+
+Run in project directory.
+
+***NOTE:*** rm -rf will force remove directories and files. Use with care. 
+
+```bash
+rm -rf dist/ build/ *.egg-info
+python -m build 
+twine upload dist/*
+conda env remove --name prod_env
+conda create -n prod_env python=3.11 -y
+conda run --name prod_env pip install datascifuncs
 ```
 
 ## Running Tests
