@@ -6,7 +6,7 @@ from sklearn.metrics import (
     confusion_matrix
 )
 
-from .tidbit_tools import write_json
+from .tools import write_json
 
 def generate_metrics(output_dir, y_true, y_pred, label):
     """Generate classification report and confusion matrix for a given dataset."""

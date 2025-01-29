@@ -1,22 +1,20 @@
 # Data Science Functions
 
- **DataSciFuncs** is a Python package providing a collection of utility functions and tools for common import, input, and output operations used by data scientists and developers.
+ **DataSciFuncs** is provides a collection of utility functions and tools for common data operations including import, output, and formatting.
 
-Current features are grouped into: 
+### Current features: 
 
-1. Tools: read and write operations with formatting
-1. Metrics generation: evaluation and visuals for classification models
-1. Project resetting: remove options for files and dirs, reset operations on notebooks
-1. Data visualization formatting: standardized formatting for matplotlib and plotly visuals
-1. Build pipeline: help for uploading packages to Test PyPi and Pypi with clean test environments
+1. **Tools:** read and write operations with formatting
+1. **Metrics:** evaluation and visuals for classification models
+1. **Project Reset:** use file pattern match and directory lists to remove intermediate files and reset notebooks
+1. **Visualization Formatting:** settings for consistent and professional matplotlib and plotly visuals
+1. **Build Pipeline:** CLI tool for uploading packages to Test PyPi and Pypi with clean test environments
 
 ## Installation
 
-You can install the `DataSciFuncs` package via PyPI or directly from GitHub.
+Install `DataSciFuncs` via PyPI or GitHub.
 
 ### Installing from PyPI
-
-To install the latest stable release from PyPI, run:
 
 ```bash
 pip install datascifuncs
@@ -24,32 +22,37 @@ pip install datascifuncs
 
 ### Installing from GitHub
 
-To install the latest development version directly from GitHub, run:
-
 ```bash
 pip install git+https://github.com/dlumian/DataSciFuncs.git
 ```
 
 ## Submodules
 
-### 1. `tidbit_tools`
-This submodule includes a variety of utility functions that support common data science tasks such as data loading, saving, and preprocessing utilities.
+### 1. `tools`
+Tools for project setup and json manipulations for consistent formatting and ease of use. 
 
-`check_directory_name` is a helpful function for controlling the current working directory of notebooks and scripts. This function accepts a `target_name` and walks up the directory to try and match given directory name. This function is of particular use when training and teaching to ensure current working directory is correct and, therefore, all imports will function as expected. 
+`check_directory_name` verfies correct current working directory of notebooks and scripts. Accepts a `target_name` and walks up the directory tree to match `target_name`. Ensures consistent import paths for datas and utils, especially useful in the context of teaching or training.
+
+`load_json` requires a json filepath, returning the loaded data.
+
+`write_json` requires data and filepath. Data is written to json filepath with set formatting including encoding and indent.
+
+`print_json` requires data and prints to output with set indent.
 
 #### Example Usage:
 ```python
-from datascifuncs.tidbit_tools import load_json, write_json, check_directory_name
+from datascifuncs.tools import check_directory_name, load_json, print_json, write_json
 
 target_dir_name = 'main_repo_dir'
-check_directory_name(target_dir_name)
+check_directory_name(target_name=target_dir_name)
 
-data = load_csv('data.json')
-save_json(data, 'data.json')
+data = load_csv(file_path='data.json')
+print_json(data=data)
+write_json(data=data, file_path='data_out.json')
 ```
 
 ### 2. `metrics`
-The `metrics` submodule provides functions to generate and save classification metrics and confusion matrices. Can be used with both training and test datasets and includes functionality for visualizing and comparing metrics when multiple evaluations exist.
+Provides functions to generate, visualize, and save classification metrics. Can be used with both training and test datasets and includes functionality for visualizing and comparing metrics when multiple evaluations exist.
 
 #### Example Usage:
 ```python
@@ -65,7 +68,7 @@ generate_classification_metrics(
 ```
 
 ### 3. `reset_project`
-The `reset_project` submodule includes functions designed to help reset your project to its original state, allowing for easy iteration, editing, and testing. This can include removing temporary files, resetting notebooks, and clearing directories.
+Functions to reset a project to its original state, allowing for faster iteration, editing, and testing. Include removing temporary/intermediate files and directories and resetting notebooks.
 
 #### Example Usage:
 ```python
@@ -82,7 +85,7 @@ reset_notebooks('notebooks')
 ```
 
 ### 4. `data_viz_formatting`
-This submodule provides standardized formatting functions for visualizations created with matplotlib and plotly. These functions handle tasks like centering titles, setting font sizes, and ensuring consistent styling across plots.
+Standardized formatting functions for visualizations created with matplotlib and plotly. Handle tasks like centering titles, setting font sizes, and ensuring consistent styling across plots.
 
 #### Example Usage:
 ```python
@@ -95,19 +98,20 @@ plotly_fit = apply_default_plotly_styling(fig, title='Main Title', xaxis_title='
 
 ### 5. `build_pipeline`
 Submodule for uploading packages to `Test PyPi` and `Pypi`. Full pipeline includes removing old build files and conda environment, using `twine` and `setup.py` files to upload package, and `anaconda` environment creation to test download. Main pipeline function can be called via command line. Arguments used are:
-- path: path to directory with setup.py
-- env-name: name for anaconda environment-NOTE: If env exists, it will be removed before new run is tested
-- package-name: name for package as it appears in PyPi and Test PyPi
-- repository: options are `testpypi` or `pypi`
+- **path:** path to directory with setup.py
+- **env-name:** name for anaconda environment-NOTE: If env exists, it will be removed before new run is tested
+- **package-name:** name for package as it appears in PyPi and Test PyPi
+- **repository:** options are `testpypi` or `pypi`
 
 ***Process Steps:***
-- Checks if version exists in given repository, exits and returns existing version numbers if so.
-- Removes old build files
-- Rebuilds package
-- Uploads package to selected repository
-- Removes conda env if it exists to ensure clean and complete install
-- Creates new conda environment
-- Installs package from repository
+- **Version Check** 
+    - If version exists in given repository, exits and returns existing version numbers.
+- **Removes old build files**
+- **Rebuilds package**
+- **Uploads package to selected repository**
+- **Removes conda env if it exists to ensure clean and complete install**
+- **Creates new conda environment**
+- **Installs package from repository**
 
 Additional testing of package once installed may be warranted.
 
@@ -120,15 +124,16 @@ build-pipeline --path /Users/dsl/Documents/GitHub/DataSciFuncs --env-name prod_e
 
 ## Running Tests
 
-To run the tests, navigate to the root directory of the package and execute:
+- Navigate to the root directory of the package (datascifuncs)
+- Run following command:
 
 ```bash
 python -m unittest discover
 ```
 
-This will run all the unit tests and provide feedback on the correctness of the various functions within the package.
+This will run unit tests and provide results of tests.
 
-NOTE: Unit tests not currently implemented for `data_viz_formatting` and `build_pipeline`. 
+**NOTE:** Unit tests not currently implemented for `data_viz_formatting` and `build_pipeline`. 
 
 ## Contributing
 

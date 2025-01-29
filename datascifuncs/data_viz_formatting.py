@@ -1,6 +1,6 @@
 import numpy as np
 
-def apply_default_matplotlib_styling(fig, axs, title, 
+def apply_matplotlib_styling(fig, axs, title, 
                 xaxis_title=None, yaxis_title=None):
     # Set the figure title
     fig.suptitle(title, fontsize=24, fontname="Arial", color="black", 
@@ -30,7 +30,7 @@ def apply_default_matplotlib_styling(fig, axs, title,
     return fig, axs
 
 
-def apply_default_plotly_styling(fig, title, xaxis_title=None, 
+def apply_plotly_styling(fig, title, xaxis_title=None, 
                           yaxis_title=None, legend_title=None):
     """ Function to update layout with consistent styling and flexible parameters
 

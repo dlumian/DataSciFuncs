@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='datascifuncs',
-    version='0.1.1',
+    version='0.1.3',
     author='Danny Lumian',
     author_email='dlumian@gmail.com',
     description='A package for loading/saving data and verifying paths.',

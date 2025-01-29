@@ -28,7 +28,6 @@ def check_directory_name(target_name) -> bool:
             return False
         # Recursively call the function to check the parent directory
         return check_directory_name(target_name)
-    
 
 def load_json(file_path):
     'Opens and loads json file'
@@ -40,3 +39,6 @@ def write_json(data, file_path):
     'Writes data to filepath with nice formatting'
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
+
+def print_json(data):    
+    print(json.dumps(data, indent=4))
